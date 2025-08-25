@@ -21,7 +21,7 @@ export const adminLogin = (req, res) => {
 export const refresh = (req, res) => {
   const { username } = req.user;      // set by auth middleware
   const token = jwt.sign({ username }, process.env.JWT_SECRET, {
-    expiresIn: "12h",
+    expiresIn: "15d",
   });
   res.json({ token });
 };
