@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 
 export const adminLogin = (req, res) => {
   const { username, password } = req.body || {};
+  console.log(req.body)
   console.log("⇢ DEBUG-LOGIN:", { username, password });   // ← add this
 
   if (
