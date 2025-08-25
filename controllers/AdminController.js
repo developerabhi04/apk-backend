@@ -11,7 +11,7 @@ export const adminLogin = (req, res) => {
   ) return res.status(401).json({ msg: "Bad creds" });
 
   const token = jwt.sign({ username }, process.env.JWT_SECRET, {
-    expiresIn: "12h",
+    expiresIn: "15d",
   });
   res.json({ token });
 };
