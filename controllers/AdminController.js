@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 export const adminLogin = (req, res) => {
   const { username, password } = req.body || {};
-  console.log("DEBUG incoming creds:", { username, password });   // ← add this
+  console.log("⇢ DEBUG-LOGIN:", { username, password });   // ← add this
 
   if (
     username !== process.env.ADMIN_USER ||
@@ -14,8 +14,6 @@ export const adminLogin = (req, res) => {
   });
   res.json({ token });
 };
-
-
 
 
 /* POST /api/admin-refresh  (validates token first) */
