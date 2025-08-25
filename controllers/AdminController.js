@@ -1,21 +1,20 @@
 import jwt from "jsonwebtoken";
 
 export const adminLogin = (req, res) => {
-  const { username = "", password = "" } = req.body;
+  const { username, password } = req.body || {};
+  console.log("DEBUG incoming creds:", { username, password });   // ← add this
 
-  // ↓ case-insensitive username, trimmed inputs
   if (
-    username.trim().toLowerCase() !== process.env.ADMIN_USER.toLowerCase() ||
-    password.trim() !== process.env.ADMIN_PASS
-  ) {
-    return res.status(401).json({ msg: "Bad creds" });
-  }
+    username !== process.env.ADMIN_USER ||
+    password !== process.env.ADMIN_PASS
+  ) return res.status(401).json({ msg: "Bad creds" });
 
   const token = jwt.sign({ username }, process.env.JWT_SECRET, {
     expiresIn: "12h",
   });
   res.json({ token });
 };
+
 
 
 
