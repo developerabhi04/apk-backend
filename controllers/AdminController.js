@@ -1,6 +1,4 @@
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-dotenv.config();
 
 /* POST /api/admin-login */
 export const adminLogin = (req, res) => {
@@ -13,15 +11,16 @@ export const adminLogin = (req, res) => {
     return res.status(401).json({ msg: "Bad creds" });
   }
 
+  // short-lived token (12 h). Mobile app will silently refresh it.
   const token = jwt.sign({ username }, process.env.JWT_SECRET, {
-    expiresIn: "12h",          // short-lived token
+    expiresIn: "12h",
   });
   res.json({ token });
 };
 
-/* POST /api/admin-refresh  (token already validated by auth middleware) */
-export const adminRefresh = (req, res) => {
-  const { username } = req.user;          // added by auth middleware
+/* POST /api/admin-refresh  (validates token first) */
+export const refresh = (req, res) => {
+  const { username } = req.user;      // set by auth middleware
   const token = jwt.sign({ username }, process.env.JWT_SECRET, {
     expiresIn: "12h",
   });
